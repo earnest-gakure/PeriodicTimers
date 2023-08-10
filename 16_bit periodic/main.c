@@ -1,5 +1,5 @@
-//creating delays
-
+//creating delays using timers
+//BLUE led blinks after every 1 sec
 #include "TM4C123.h"                    // Device header
 #define BLUE (1U<<2)
 void period_timer (int time );
@@ -10,15 +10,15 @@ int main (){
 	GPIOF->DEN       |=BLUE;
 	
 	while (1){
-		GPIOF->DATA ^= BLUE;
-		period_timer(60000);
+		GPIOF->DATA ^= BLUE; //togle BLUE LED
+		period_timer(1000);     //1 Second deley
 		
 	}
 }
 void period_timer (int time )
 {
 	int j;
-	SYSCTL->RCGCTIMER |= 0x01 ;
+	SYSCTL->RCGCTIMER |= 0x01 ;  //enable clock for Timer 0
 	TIMER0->CTL       |= 0x00 ; //DISSALBE TIMER
 	TIMER0->CFG       |= 0x04 ; //selecting our timer as 16-bits
 	TIMER0->TAMR      |= 0x02 ;  //selecting periodic timer
